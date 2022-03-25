@@ -10,10 +10,10 @@ class TStack {
   public:
     TStack(): top(-1) {}
     bool isEmpty() {
-      return top == -1;
+      return -1 == top;
     }
     bool isFull() {
-      return top == size - 1;
+      return size - 1 == top;
     }
     T get() {
       if (!isEmpty())
