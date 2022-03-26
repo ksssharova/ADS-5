@@ -28,6 +28,7 @@ bool isDigit(std::string pref) {
   } return true;
 }
 
+
 std::string infx2pstfx(std::string inf) {
   TStack <char, 100> itstack;
   std::string res;
