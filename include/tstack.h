@@ -3,35 +3,29 @@
 #define INCLUDE_TSTACK_H_
 
 template<typename T, int size>
-class TStack {
-  private:
-    T arr[100];
+class TStack
+{
+private:
+    T arr[size];
     int top;
-  public:
-    TStack(): top(-1) {}
-    bool isEmpty() {
-      return -1 == top;
-    }
-    bool isFull() {
-      return size - 1 == top;
-    }
-    T get() {
-      if (!isEmpty())
+public:
+    TStack() :top(-1) { }
+    T get() const {
         return arr[top];
-      else
-        throw "Empty!";
+    }
+    bool isEmpty() const {
+        return top == -1;
+    }
+    bool isFull() const {
+        return top == size - 1;
     }
     void pop() {
-      if (!(isEmpty()))
-        --top;
-      else
-        throw "Empty!";
+        if (top >= 0)
+            top--;
     }
-    void push(T value) {
-      if (isFull())
-        throw "Full !";
-      else
-        arr[++top] = value;
+    void push(T item) {
+        if (top < size - 1)
+            arr[++top] = item;
     }
 };
 #endif  // INCLUDE_TSTACK_H_
