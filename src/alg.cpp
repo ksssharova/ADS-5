@@ -102,4 +102,5 @@ int eval(std::string post) {
       }
     }
   }
+  return ptstack.get();
 }
