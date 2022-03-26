@@ -38,7 +38,8 @@ std::string infx2pstfx(std::string inf) {
         res.push_back(' ');
       }
       res.push_back(inf[i]);
-    } else if ((priority(inf[i]) > priority(itstack.get())) || (itstack.isEmpty()) || (priority(inf[i]) == 0)) {
+    } else if ((priority(inf[i]) > priority(itstack.get())) 
+               || (itstack.isEmpty()) || (priority(inf[i]) == 0)) {
       itstack.push(inf[i]);
     } else {
       if (priority(inf[i]) == 1) {
