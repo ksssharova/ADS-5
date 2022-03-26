@@ -25,50 +25,45 @@ bool isDigit(std::string pref) {
   for (size_t i = 0; i < pref.size(); ++i) {
     if (pref[i] < '0' || pref[i] > '9')
       return false;
-  } return true;
+  }
+  return true;
 }
-
 
 std::string infx2pstfx(std::string inf) {
   TStack <char, 100> itstack;
   std::string res;
   for (size_t i = 0; i < inf.size(); i++) {
-      if ((priority(inf[i]) == -1) && (priority(inf[i]) != 1)) {
-          if (!res.empty() && priority(inf[i - 1]) != -1)
-          {
-              res.push_back(' ');
-          }
-          res.push_back(inf[i]);
+    if ((priority(inf[i]) == -1) && (priority(inf[i]) != 1)) {
+      if (!res.empty() && priority(inf[i - 1]) != -1) {
+        res.push_back(' ');
       }
-      else if ((priority(inf[i]) > priority(itstack.get())) || (itstack.isEmpty()) || (priority(inf[i]) == 0)) {
-          itstack.push(inf[i]);
+      res.push_back(inf[i]);
+    } else if ((priority(inf[i]) > priority(itstack.get())) || (itstack.isEmpty()) || (priority(inf[i]) == 0)) {
+      itstack.push(inf[i]);
+    } else {
+      if (priority(inf[i]) == 1) {
+        while (priority(itstack.get()) != 0) {
+          res.push_back(' ');
+          res.push_back(itstack.get());
+          itstack.pop();
+        }
+        itstack.pop();
+      } else {
+        while (priority(itstack.get()) >= priority(inf[i])) {
+          res.push_back(' ');
+          res.push_back(itstack.get());
+          itstack.pop();
+        }
+        itstack.push(inf[i]);
       }
-      else {
-          if (priority(inf[i]) == 1) {
-              while (priority(itstack.get()) != 0) {
-                  res.push_back(' ');
-                  res.push_back(itstack.get());
-                  itstack.pop();
-              }
-              itstack.pop();
-          }
-          else {
-              while (priority(itstack.get()) >= priority(inf[i]))
-              {
-                  res.push_back(' ');
-                  res.push_back(itstack.get());
-                  itstack.pop();
-              }
-              itstack.push(inf[i]);
-          }
-      }
+    }
   }
   while (!itstack.isEmpty()) {
-      res.push_back(' ');
-      if (priority(itstack.get()) != 0) {
-          res.push_back(itstack.get());
-      }
-      itstack.pop();
+    res.push_back(' ');
+    if (priority(itstack.get()) != 0) {
+      res.push_back(itstack.get());
+    }
+    itstack.pop();
   }
   return res;
 }
@@ -76,7 +71,8 @@ std::string infx2pstfx(std::string inf) {
 int eval(std::string post) {
   TStack <int, 100> ptstack;
   std::string temp;
-  int oper1 = 0, oper2 = 0;
+  int oper1 = 0;
+  int oper2 = 0;
   size_t start = 0, end = 0;
   for (size_t i = 0; i < post.size(); ++i) {
     if (post[i] == ' ' || i == post.size()-1) {
